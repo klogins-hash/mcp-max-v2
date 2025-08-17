@@ -13,7 +13,7 @@ if ! command -v railway &> /dev/null; then
 fi
 
 # Set Railway token
-export RAILWAY_TOKEN="0bc37f0c-3477-4ad6-a430-a50ed86a1680"
+export RAILWAY_TOKEN="ce03376f-6cf9-43ea-b678-12055cc20a7c"
 
 # Login to Railway
 echo "📝 Using Railway API token..."

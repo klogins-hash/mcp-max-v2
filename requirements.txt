@@ -13,11 +13,11 @@ prometheus-client==0.19.0
 psutil==5.9.6
 
 # MCP dependencies
-mcp==0.1.0
+# mcp==0.1.0  # Custom package, not on PyPI
 websockets==12.0
 
 # Async utilities
-asyncio==3.4.3
+# asyncio==3.4.3  # Built into Python, not a PyPI package
 aiofiles==23.2.1
 
 # JSON handling
