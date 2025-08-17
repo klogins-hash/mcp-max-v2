@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mcp-hub:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile.railway
+    ports:
+      - "8000:8000"
+    environment:
+      - RAILWAY_ENVIRONMENT=production
+      - PORT=8000
+      - PYTHONUNBUFFERED=1
+      - GUNICORN_WORKERS=16
+      - GUNICORN_WORKER_CLASS=uvicorn.workers.UvicornWorker
+      - GUNICORN_WORKER_CONNECTIONS=2000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '32'
+          memory: 32G
+        reservations:
+          cpus: '16'
+          memory: 16G
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge

@@ -1,0 +1,62 @@
+# Optimized for Railway with 32 vCPU and 32GB RAM
+FROM python:3.11-slim
+
+# Install system dependencies and performance tools
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    make \
+    libffi-dev \
+    libssl-dev \
+    curl \
+    htop \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy requirements first for better caching
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install uvloop for better async performance
+RUN pip install --no-cache-dir uvloop aiohttp gunicorn[gevent] prometheus-client
+
+# Copy the entire project
+COPY . .
+
+# Set environment variables for optimization
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONOPTIMIZE=1
+ENV GUNICORN_WORKERS=16
+ENV GUNICORN_WORKER_CLASS=uvicorn.workers.UvicornWorker
+ENV GUNICORN_WORKER_CONNECTIONS=2000
+ENV GUNICORN_MAX_REQUESTS=10000
+ENV GUNICORN_MAX_REQUESTS_JITTER=1000
+ENV GUNICORN_KEEPALIVE=5
+ENV GUNICORN_TIMEOUT=120
+# Railway specific optimizations
+ENV PORT=8000
+ENV RAILWAY_ENVIRONMENT=production
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:8000/health || exit 1
+
+# Start with optimized settings for 32 cores
+CMD ["gunicorn", "mcp_hub.main:app", \
+     "--workers", "16", \
+     "--worker-class", "uvicorn.workers.UvicornWorker", \
+     "--worker-connections", "2000", \
+     "--max-requests", "10000", \
+     "--max-requests-jitter", "1000", \
+     "--timeout", "120", \
+     "--keep-alive", "5", \
+     "--bind", "0.0.0.0:8000", \
+     "--access-logfile", "-", \
+     "--error-logfile", "-", \
+     "--preload", \
+     "--statsd-host", "localhost:8125"]

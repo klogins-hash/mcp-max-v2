@@ -1,0 +1,64 @@
+{
+  "name": "MCP Max v2 Hub",
+  "description": "Optimized MCP Hub for 20+ services on Railway",
+  "performance": {
+    "worker_processes": 16,
+    "worker_threads": 4,
+    "max_connections_per_worker": 2000,
+    "connection_pool_size": 200,
+    "max_memory_per_worker": 1536,
+    "async_pool_size": 2000
+  },
+  "services": {
+    "app1-server": {
+      "enabled": true,
+      "max_instances": 3,
+      "memory_limit": 768,
+      "cpu_shares": 1024
+    },
+    "app2-server": {
+      "enabled": true,
+      "max_instances": 3,
+      "memory_limit": 768,
+      "cpu_shares": 1024
+    },
+    "app3-server": {
+      "enabled": true,
+      "max_instances": 2,
+      "memory_limit": 512,
+      "cpu_shares": 512
+    },
+    "app4-server": {
+      "enabled": true,
+      "max_instances": 2,
+      "memory_limit": 512,
+      "cpu_shares": 512
+    },
+    "app5-server": {
+      "enabled": true,
+      "max_instances": 2,
+      "memory_limit": 512,
+      "cpu_shares": 512
+    }
+  },
+  "resource_allocation": {
+    "hub_memory": 8192,
+    "hub_cpu_shares": 8192,
+    "total_service_memory": 24576,
+    "reserved_memory": 0,
+    "total_memory": 32768
+  },
+  "scaling": {
+    "auto_scale": true,
+    "min_replicas": 1,
+    "max_replicas": 1,
+    "target_cpu_utilization": 70,
+    "target_memory_utilization": 80
+  },
+  "monitoring": {
+    "enable_metrics": true,
+    "metrics_port": 9090,
+    "health_check_interval": 10,
+    "log_level": "INFO"
+  }
+}

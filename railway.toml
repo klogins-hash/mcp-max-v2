@@ -1,0 +1,22 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "deployment/docker/Dockerfile.railway"
+
+[deploy]
+startCommand = "gunicorn mcp-hub.main:app --workers 16 --worker-class uvicorn.workers.UvicornWorker --worker-connections 2000 --bind 0.0.0.0:$PORT"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+[[services]]
+name = "mcp-hub"
+memory = "8GB"
+cpu = "8"
+
+[environments.production]
+PORT = "8000"
+MCP_HUB_PORT = "8000"
+GUNICORN_WORKERS = "16"
+GUNICORN_WORKER_CLASS = "uvicorn.workers.UvicornWorker"
+GUNICORN_WORKER_CONNECTIONS = "2000"
