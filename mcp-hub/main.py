@@ -10,7 +10,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import logging
 import sys
+import os
 from typing import Dict, Any
+
+# Add the mcp-hub directory to Python path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from src.config import get_config, HubConfig
 from src.registry import ServiceRegistry, ServiceInfo, ServiceStatus
