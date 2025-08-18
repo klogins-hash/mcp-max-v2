@@ -60,6 +60,13 @@
         "HOMEASSISTANT_URL": "https://f530xzyua6tlmxk3nc0epcqgabztmouj.ui.nabu.casa",
         "HOMEASSISTANT_TOKEN": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiY2JmZGU4NDA3ODM0ODMyOGRkYWJmMGY5ODNjOTRlMCIsImlhdCI6MTc1NTM5NTU4NywiZXhwIjoyMDcwNzU1NTg3fQ.19EaM0_E1Rvc-7UZKzg9cJMJHijWFyLFDB1JefsDGnQ"
       }
+    },
+    "railway-admin": {
+      "command": "python3",
+      "args": ["/Users/franksimpson/CascadeProjects/mcp-max-v2/mcp-servers/railway-admin-server/server.py"],
+      "env": {
+        "RAILWAY_API_TOKEN": "0bc37f0c-3477-4ad6-a430-a50ed86a1680"
+      }
     }
   }
 }
