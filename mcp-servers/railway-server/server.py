@@ -268,27 +268,37 @@ class WebScraperMCPServer:
         }
 
 async def main():
-    server = WebScraperMCPServer()
+    server = RailwayMCPServer()
     await server.initialize()
     
-    try:
-        reader = asyncio.StreamReader()
-        protocol = asyncio.StreamReaderProtocol(reader)
-        await asyncio.get_event_loop().connect_read_pipe(lambda: protocol, sys.stdin)
-        
-        while True:
-            line = await reader.readline()
-            if not line:
-                break
-            try:
-                request = json.loads(line.decode().strip())
-                response = await server.handle_request(request)
-                print(json.dumps(response))
-                sys.stdout.flush()
-            except Exception as e:
-                logger.error(f"Error: {e}")
-    finally:
-        await server.cleanup()
+    # Check if running in Railway environment
+    if os.getenv('RAILWAY_ENVIRONMENT'):
+        logger.info("Running in Railway environment - server initialized and ready")
+        # Keep the server running
+        try:
+            await asyncio.Event().wait()
+        except KeyboardInterrupt:
+            pass
+    else:
+        # Local development mode - read from stdin
+        try:
+            reader = asyncio.StreamReader()
+            protocol = asyncio.StreamReaderProtocol(reader)
+            await asyncio.get_event_loop().connect_read_pipe(lambda: protocol, sys.stdin)
+            
+            while True:
+                line = await reader.readline()
+                if not line:
+                    break
+                try:
+                    request = json.loads(line.decode().strip())
+                    response = await server.handle_request(request)
+                    print(json.dumps(response))
+                    sys.stdout.flush()
+                except Exception as e:
+                    logger.error(f"Error: {e}")
+        finally:
+            await server.cleanup()
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -1,0 +1,58 @@
+{
+  "hub": {
+    "name": "mcp-hub-prod",
+    "resources": {
+      "cpu": 4,
+      "memory": "8GB",
+      "replicas": 2
+    },
+    "environment": {
+      "MCP_HUB_PORT": "8000",
+      "MCP_HUB_WORKERS": "16",
+      "MCP_HUB_LOG_LEVEL": "info"
+    }
+  },
+  "servers": {
+    "high-traffic": {
+      "description": "High-traffic servers (OpenAI, GitHub, etc)",
+      "resources": {
+        "cpu": 2,
+        "memory": "2GB",
+        "replicas": 2
+      },
+      "examples": ["openai", "github", "anthropic"]
+    },
+    "standard": {
+      "description": "Standard usage servers",
+      "resources": {
+        "cpu": 1,
+        "memory": "1GB",
+        "replicas": 1
+      },
+      "examples": ["spotify", "notion", "linear"]
+    },
+    "low-traffic": {
+      "description": "Low-traffic or utility servers",
+      "resources": {
+        "cpu": 0.5,
+        "memory": "512MB",
+        "replicas": 1
+      },
+      "examples": ["weather", "calculator", "timezone"]
+    }
+  },
+  "shared-services": {
+    "redis": {
+      "name": "mcp-redis",
+      "purpose": "Caching and session storage"
+    },
+    "postgres": {
+      "name": "mcp-postgres",
+      "purpose": "Persistent state and configuration"
+    },
+    "monitoring": {
+      "name": "mcp-monitoring",
+      "purpose": "Grafana + Prometheus stack"
+    }
+  }
+}
