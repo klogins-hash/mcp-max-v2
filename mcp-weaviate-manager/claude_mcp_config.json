@@ -52,6 +52,14 @@
         "SPOTIFY_CLIENT_ID": "your_client_id",
         "SPOTIFY_CLIENT_SECRET": "your_client_secret"
       }
+    },
+    "homeassistant": {
+      "command": "python3",
+      "args": ["/Users/dp/CascadeProjects/mcp max v2/mcp-servers/homeassistant-server/server.py"],
+      "env": {
+        "HOMEASSISTANT_URL": "https://f530xzyua6tlmxk3nc0epcqgabztmouj.ui.nabu.casa",
+        "HOMEASSISTANT_TOKEN": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiY2JmZGU4NDA3ODM0ODMyOGRkYWJmMGY5ODNjOTRlMCIsImlhdCI6MTc1NTM5NTU4NywiZXhwIjoyMDcwNzU1NTg3fQ.19EaM0_E1Rvc-7UZKzg9cJMJHijWFyLFDB1JefsDGnQ"
+      }
     }
   }
 }
