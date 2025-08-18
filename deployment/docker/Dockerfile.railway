@@ -48,15 +48,3 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 
 # Start with optimized settings for 32 cores
 CMD ["./start.sh"]
-     "--workers", "16", \
-     "--worker-class", "uvicorn.workers.UvicornWorker", \
-     "--worker-connections", "2000", \
-     "--max-requests", "10000", \
-     "--max-requests-jitter", "1000", \
-     "--timeout", "120", \
-     "--keep-alive", "5", \
-     "--bind", "0.0.0.0:8000", \
-     "--access-logfile", "-", \
-     "--error-logfile", "-", \
-     "--preload", \
-     "--statsd-host", "localhost:8125"]

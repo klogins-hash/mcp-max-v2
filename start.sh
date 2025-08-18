@@ -10,4 +10,4 @@ echo "Port: ${PORT:-8000}"
 export PYTHONPATH=/app:$PYTHONPATH
 
 # Start with gunicorn using config file
-exec gunicorn mcp_hub.main:app -c gunicorn.conf.py
+exec gunicorn mcp-hub.main:app -c gunicorn.conf.py
