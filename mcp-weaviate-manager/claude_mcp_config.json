@@ -44,6 +44,14 @@
     "puppeteer": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
+    "spotify": {
+      "command": "python",
+      "args": ["/Users/dp/CascadeProjects/mcp max v2/mcp-servers/spotify-server/server.py"],
+      "env": {
+        "SPOTIFY_CLIENT_ID": "your_client_id",
+        "SPOTIFY_CLIENT_SECRET": "your_client_secret"
+      }
     }
   }
 }
